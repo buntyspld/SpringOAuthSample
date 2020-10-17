@@ -21,4 +21,14 @@ public class ProductService {
     }
 
 
+    public Product productByName(String productName) {
+  //      return allProduct.stream().filter(p->p.getProductName().equalsIgnoreCase(productName)).findFirst();
+   //     return Collections.binarySearch(allProduct,productName);
+        for(Product p:allProduct){
+            if(p.getProductName().equalsIgnoreCase(productName)) {
+                return p;
+            }
+        }
+        return null;
+    }
 }

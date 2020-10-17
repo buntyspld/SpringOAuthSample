@@ -18,4 +18,9 @@ public class ProductResource {
     public List<Product> allProducts(){
         return productService.allProducts();
     }
+    @GetMapping("/product/{productNames}")
+    public Product productbyName(String productName){
+        return productService.productByName(productName);
+    }
+
 }

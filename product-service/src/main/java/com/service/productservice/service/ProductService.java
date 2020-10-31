@@ -1,12 +1,25 @@
 package com.service.productservice.service;
 
 import com.service.productservice.model.Product;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 @Service
 public class ProductService {
+	
+	@Autowired
+	private KafkaTemplate<String, String> template;
+	
+	@Autowired
+	private KafkaTemplate<String, Product> templateProduct;
+	
+	String topic = "Ship_Order";
+	String topicInUse = "Confirm_Order";
+	
     private static List<Product> allProduct = new ArrayList<>();
 
     public ProductService() {
@@ -26,6 +39,8 @@ public class ProductService {
    //     return Collections.binarySearch(allProduct,productName);
         for(Product p:allProduct){
             if(p.getProductName().equalsIgnoreCase(productName)) {
+            	template.send(topicInUse, "Order Confirmed");
+            	templateProduct.send(topic, p);
                 return p;
             }
         }
